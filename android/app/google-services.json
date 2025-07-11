@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "335321512309",
+    "project_id": "proyectomovil-adcb4",
+    "storage_bucket": "proyectomovil-adcb4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335321512309:android:b459d2b97f7c5b3f18bb3c",
+        "android_client_info": {
+          "package_name": "com.tuempresa.inventarioropa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDmmJY5twtnUV1lkujMJ7TaK3AlD3OxyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
