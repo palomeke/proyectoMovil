@@ -17,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  //instroducioendo un segundo cambio
   // Inicializa Hive correctamente para todas las plataformas (incluye Web)
   await HiveService.init();
 
