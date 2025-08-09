@@ -1,7 +1,7 @@
 import 'dart:io' as io;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 
 import '../clothes/clothes_model.dart';
 
@@ -25,5 +25,6 @@ Future<void> exportClothesToPDF(List<Clothes> clothes) async {
   final dir = await getApplicationDocumentsDirectory();
   final file = io.File('${dir.path}/reporte_prendas.pdf');
   await file.writeAsBytes(await pdf.save());
-  await OpenFile.open(file.path);
+  await OpenFilex.open(file.path);
 }
+//189572344486:android:0e753f814c9b0ed274e267

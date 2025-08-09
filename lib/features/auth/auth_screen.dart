@@ -6,7 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import '../clothes/clothes_model.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -152,7 +152,7 @@ Future<void> exportClothesToPDF(List<Clothes> clothes) async {
     final file = File(filePath);
 
     await file.writeAsBytes(await pdf.save());
-    await OpenFile.open(file.path);
+    await OpenFilex.open(file.path);
   } catch (e) {
     print('Error exportando PDF: $e');
   }

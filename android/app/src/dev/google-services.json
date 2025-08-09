@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "215712720815",
-    "project_id": "encomex-prod",
-    "storage_bucket": "encomex-prod.firebasestorage.app"
+    "project_number": "189572344486",
+    "project_id": "encomex-dev",
+    "storage_bucket": "encomex-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:215712720815:android:5f157362322efd83a0f15a",
+        "mobilesdk_app_id": "1:189572344486:android:0e753f814c9b0ed274e267",
         "android_client_info": {
-          "package_name": "com.qhantati.encomex"
+          "package_name": "com.qhantati.encomex.dev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCQLSogR2CJOO_8P1HeQ0ex9lLT1_NsOwQ"
+          "current_key": "AIzaSyD6OZj8vHbLDcczts6s5WpurfcejOE5mVI"
         }
       ],
       "services": {
