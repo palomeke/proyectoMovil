@@ -1,4 +1,4 @@
-package com.tuempresa.inventarioropa
+package com.qhantati.encomex
 
 import io.flutter.embedding.android.FlutterActivity
 
