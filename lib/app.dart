@@ -18,7 +18,7 @@ class MyApp extends ConsumerWidget {
       home: authState.when(
         loading: () =>
             const Scaffold(body: Center(child: CircularProgressIndicator())),
-        error: (e, _) => Scaffold(body: Center(child: Text('Error: \$e'))),
+        error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
         data: (user) =>
             user != null ? const ClothesScreen() : const AuthScreen(),
       ),
