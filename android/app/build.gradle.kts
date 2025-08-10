@@ -5,17 +5,25 @@ val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-    println("DEBUG keystore props -> storeFile=${keystoreProperties.getProperty("storeFile")}, alias=${keystoreProperties.getProperty("keyAlias")}")
+    println("DEBUG keystore props file detectado")
 } else {
     println("DEBUG: key.properties NO existe en ${keystorePropertiesFile.absolutePath}")
 }
+
+// ---- Lee de -P primero, luego cae a key.properties ----
+fun prop(name: String): String? = (project.findProperty(name) as String?)
+    ?: keystoreProperties.getProperty(name)
+
+val storeFileProp     = prop("storeFile")              // ej: keystore/my-release-key.jks
+val storePasswordProp = prop("storePassword")
+val keyAliasProp      = prop("keyAlias")
+val keyPasswordProp   = prop("keyPassword")
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
-    
     id("com.google.firebase.crashlytics")
 }
 
@@ -39,38 +47,43 @@ android {
         versionName = flutter.versionName
     }
 
-    // Firma release (solo si existe key.properties)
-   signingConfigs {
-        if (
-            keystorePropertiesFile.exists() &&
-            !keystoreProperties.getProperty("storeFile").isNullOrBlank() &&
-            !keystoreProperties.getProperty("storePassword").isNullOrBlank() &&
-            !keystoreProperties.getProperty("keyAlias").isNullOrBlank() &&
-            !keystoreProperties.getProperty("keyPassword").isNullOrBlank()
+    // ---- Firma release con merge de orígenes (P o file) ----
+    signingConfigs {
+        if (!storeFileProp.isNullOrBlank()
+            && !storePasswordProp.isNullOrBlank()
+            && !keyAliasProp.isNullOrBlank()
+            && !keyPasswordProp.isNullOrBlank()
         ) {
             create("release") {
-                val sf = keystoreProperties.getProperty("storeFile")
-                storeFile = file(sf)
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
+                // OJO: file() resuelve relativo a android/app, por eso funciona "keystore/..."
+                storeFile = file(storeFileProp!!)
+                storePassword = storePasswordProp
+                keyAlias = keyAliasProp
+                keyPassword = keyPasswordProp
                 println("DEBUG signing -> absPath=${storeFile?.absolutePath} exists=${storeFile?.exists()}")
             }
         } else {
-            println("DEBUG: key.properties incompleto -> no se crea signingConfig.release")
+            println("DEBUG: credenciales de firma incompletas -> no se crea signingConfig.release")
         }
     }
-     buildTypes {
+
+    // ---- Build types (unificado) ----
+    buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            if (signingConfigs.findByName("release") != null) {
-                signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            // Solo asigna si existe la config
+            signingConfigs.findByName("release")?.let { sc ->
+                signingConfig = sc
             }
         }
     }
 
-    // Flavors
+    // ---- Flavors ----
     flavorDimensions += "env"
     productFlavors {
         create("dev") {
@@ -84,21 +97,6 @@ android {
             resValue("string", "app_name", "Encomex")
         }
     }
-
-   buildTypes {
-    getByName("release") {
-        isMinifyEnabled = true
-        isShrinkResources = true
-        // Solo asigna si existe la config
-        if (signingConfigs.findByName("release") != null) {
-            signingConfig = signingConfigs.getByName("release")
-        }
-        proguardFiles(
-            getDefaultProguardFile("proguard-android-optimize.txt"),
-            "proguard-rules.pro"
-        )
-    }
-}
 }
 
 dependencies {
