@@ -1,10 +1,13 @@
 import java.util.Properties
 import java.io.FileInputStream
 
-val keystorePropertiesFile = rootProject.file("android/key.properties")
+val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    println("DEBUG keystore props -> storeFile=${keystoreProperties.getProperty("storeFile")}, alias=${keystoreProperties.getProperty("keyAlias")}")
+} else {
+    println("DEBUG: key.properties NO existe en ${keystorePropertiesFile.absolutePath}")
 }
 
 plugins {
@@ -37,13 +40,32 @@ android {
     }
 
     // Firma release (solo si existe key.properties)
-    signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+   signingConfigs {
+        if (
+            keystorePropertiesFile.exists() &&
+            !keystoreProperties.getProperty("storeFile").isNullOrBlank() &&
+            !keystoreProperties.getProperty("storePassword").isNullOrBlank() &&
+            !keystoreProperties.getProperty("keyAlias").isNullOrBlank() &&
+            !keystoreProperties.getProperty("keyPassword").isNullOrBlank()
+        ) {
             create("release") {
-                storeFile = file(keystoreProperties["storeFile"] as String)
-                storePassword = keystoreProperties["storePassword"] as String
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["keyPassword"] as String
+                val sf = keystoreProperties.getProperty("storeFile")
+                storeFile = file(sf)
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                println("DEBUG signing -> absPath=${storeFile?.absolutePath} exists=${storeFile?.exists()}")
+            }
+        } else {
+            println("DEBUG: key.properties incompleto -> no se crea signingConfig.release")
+        }
+    }
+     buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            if (signingConfigs.findByName("release") != null) {
+                signingConfig = signingConfigs.getByName("release")
             }
         }
     }
@@ -63,21 +85,20 @@ android {
         }
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            // Usa la firma release si la definimos
-            if (signingConfigs.findByName("release") != null) {
-                signingConfig = signingConfigs.getByName("release")
-            }
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+   buildTypes {
+    getByName("release") {
+        isMinifyEnabled = true
+        isShrinkResources = true
+        // Solo asigna si existe la config
+        if (signingConfigs.findByName("release") != null) {
+            signingConfig = signingConfigs.getByName("release")
         }
-        getByName("debug") { /* configs debug si necesitas */ }
+        proguardFiles(
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
+        )
     }
+}
 }
 
 dependencies {
