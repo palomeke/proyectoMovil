@@ -1,9 +1,8 @@
 # ci/docker/Dockerfile
-
-# Imagen base con Flutter + Android SDK + Java ya listos
 FROM ghcr.io/cirruslabs/flutter:stable
+# ↑ Trae Flutter + Android SDK listos para CI
 
-# Paquetes útiles + firebase-tools (para App Distribution)
+# Java 17 + Node/npm + firebase-tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       openjdk-17-jdk \
@@ -12,9 +11,8 @@ RUN apt-get update && \
     && npm i -g firebase-tools \
     && rm -rf /var/lib/apt/lists/*
 
-# Aceptar licencias del SDK (evita prompts en tiempo de build)
-# En la base de cirruslabs suele existir sdkmanager en el PATH
+# Aceptar licencias de Android (evita prompts)
 RUN yes | sdkmanager --licenses || true
 
-# (Opcional) crear carpetas de cache (las montaremos como volúmenes al correr)
+# Caches (no obligatorias pero útiles)
 RUN mkdir -p /root/.pub-cache /root/.gradle

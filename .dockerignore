@@ -1,10 +1,8 @@
-.git
-build
-.android
-.ios
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache
-.gradle
+# context = ci/docker → casi nada, pero por si acaso:
+.*
 **/*.jks
 **/key.properties
+**/google-services.json
+**/build
+**/.gradle
+**/.pub-cache
