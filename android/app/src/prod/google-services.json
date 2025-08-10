@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "215712720815",
-    "project_id": "encomex-prod",
-    "storage_bucket": "encomex-prod.firebasestorage.app"
+    "project_number": "335321512309",
+    "project_id": "proyectomovil-adcb4",
+    "storage_bucket": "proyectomovil-adcb4.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:215712720815:android:5f157362322efd83a0f15a",
+        "mobilesdk_app_id": "1:335321512309:android:1888e934b0cd7d7418bb3c",
         "android_client_info": {
           "package_name": "com.qhantati.encomex"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCQLSogR2CJOO_8P1HeQ0ex9lLT1_NsOwQ"
+          "current_key": "AIzaSyDDmmJY5twtnUV1lkujMJ7TaK3AlD3OxyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335321512309:android:b459d2b97f7c5b3f18bb3c",
+        "android_client_info": {
+          "package_name": "com.tuempresa.inventarioropa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDmmJY5twtnUV1lkujMJ7TaK3AlD3OxyA"
         }
       ],
       "services": {

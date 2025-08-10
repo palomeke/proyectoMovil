@@ -53,11 +53,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCQLSogR2CJOO_8P1HeQ0ex9lLT1_NsOwQ',
-    appId: '1:215712720815:android:5f157362322efd83a0f15a',
-    messagingSenderId: '215712720815',
-    projectId: 'encomex-prod',
-    storageBucket: 'encomex-prod.firebasestorage.app',
+    apiKey: 'AIzaSyDDmmJY5twtnUV1lkujMJ7TaK3AlD3OxyA',
+    appId: '1:335321512309:android:1888e934b0cd7d7418bb3c',
+    messagingSenderId: '335321512309',
+    projectId: 'proyectomovil-adcb4',
+    storageBucket: 'proyectomovil-adcb4.firebasestorage.app',
   );
 
 }
