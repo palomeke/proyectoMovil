@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'core/services/hive_service.dart'; // Asegúrate de importar correctamente este archivo
 
-import 'features/clothes/clothes_model.dart';
 import 'features/auth/auth_provider.dart';
 import 'features/auth/auth_screen.dart';
 import 'features/clothes/clothes_screen.dart';

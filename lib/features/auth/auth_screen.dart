@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'auth_provider.dart';
-import 'auth_repository.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;

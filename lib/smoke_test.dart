@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -16,7 +15,8 @@ class _SmokeTestScreenState extends State<SmokeTestScreen> {
   Future<void> _signInAnon() async {
     setState(() => _status = 'Signing in anonymously...');
     await FirebaseAuth.instance.signInAnonymously();
-    setState(() => _status = 'Signed in: ${FirebaseAuth.instance.currentUser?.uid}');
+    setState(
+        () => _status = 'Signed in: ${FirebaseAuth.instance.currentUser?.uid}');
   }
 
   Future<void> _addDemoDoc() async {
@@ -46,9 +46,15 @@ class _SmokeTestScreenState extends State<SmokeTestScreen> {
           children: [
             Text('Status: $_status'),
             const SizedBox(height: 12),
-            ElevatedButton(onPressed: _signInAnon, child: const Text('Auth: Sign-in Anónimo')),
-            ElevatedButton(onPressed: _addDemoDoc, child: const Text('Firestore: Añadir documento demo')),
-            ElevatedButton(onPressed: _forceCrash, child: const Text('Crashlytics: Forzar crash')),
+            ElevatedButton(
+                onPressed: _signInAnon,
+                child: const Text('Auth: Sign-in Anónimo')),
+            ElevatedButton(
+                onPressed: _addDemoDoc,
+                child: const Text('Firestore: Añadir documento demo')),
+            ElevatedButton(
+                onPressed: _forceCrash,
+                child: const Text('Crashlytics: Forzar crash')),
             const SizedBox(height: 12),
             const Text('Últimas 5 encomiendas:'),
             const SizedBox(height: 8),
