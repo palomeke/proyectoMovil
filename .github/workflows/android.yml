@@ -30,16 +30,12 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - - name: Analyze
-  run: |
-    # Opción A: usar el analizador de Dart con flags
-    dart analyze --no-fatal-warnings --no-fatal-infos \
-      || true
-    # Opción B (equivalente con Flutter):
-    # flutter analyze || true
+      - name: Analyze & Test (no romper por warnings)
+        run: |
+          dart --version
+          flutter analyze || true
+          flutter test
 
-      # Para repos de proyecto (NO username.github.io):
-      # usa el nombre real del repo entre barras: /proyectoMovil/
       - name: Build Web (release)
         run: flutter build web --release --base-href "/proyectoMovil/"
 
