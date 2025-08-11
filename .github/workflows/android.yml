@@ -1,15 +1,22 @@
-name: Flutter CI (sin Android)
+name: Flutter Web → GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  pull_request:
   workflow_dispatch:
 
-jobs:
-  ci:
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,8 +30,27 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Analyze
-        run: flutter analyze
+      - name: Analyze & Test
+        run: |
+          flutter analyze
+          flutter test
 
-      - name: Tests
-        run: flutter test
+      # Para repos de proyecto (NO username.github.io):
+      # usa el nombre real del repo entre barras: /proyectoMovil/
+      - name: Build Web (release)
+        run: flutter build web --release --base-href "/proyectoMovil/"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
