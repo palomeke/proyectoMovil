@@ -1,6 +1,5 @@
-import 'dart:typed_data';
-import 'dart:js_interop'; // ← para usar .toJS
-import 'package:web/web.dart' as web; // ← reemplaza dart:html
+/// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 import 'package:pdf/widgets.dart' as pw;
 
 import '../clothes/clothes_model.dart';
@@ -16,29 +15,17 @@ Future<void> exportClothesToPDF(List<Clothes> clothes) async {
           pw.Text('Listado de Prendas', style: pw.TextStyle(fontSize: 24)),
           pw.SizedBox(height: 20),
           ...clothes.map((item) => pw.Text(
-                '• ${item.name} - Tipo: ${item.type}, Talla: ${item.size}, Cantidad: ${item.quantity}',
-              )),
+              '• ${item.name} - Tipo: ${item.type}, Talla: ${item.size}, Cantidad: ${item.quantity}')),
         ],
       ),
     ),
   );
 
-  // bytes del PDF
-  final Uint8List bytes = await pdf.save();
-
-  // Crear Blob y URL con package:web
-  final blob = web.Blob([bytes.toJS]); // ← importante: .toJS
-  final url = web.URL.createObjectURL(blob);
-
-  // Crear <a>, disparar descarga, limpiar
-  final anchor = web.document.createElement('a') as web.HTMLAnchorElement;
-  anchor.href = url;
-  anchor.download = 'reporte_prendas.pdf';
-  anchor.style.display = 'none';
-  web.document.body?.appendChild(anchor);
-
-  anchor.click();
-
-  anchor.remove();
-  web.URL.revokeObjectURL(url);
+  final bytes = await pdf.save();
+  final blob = html.Blob([bytes]);
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute("download", "reporte_prendas.pdf")
+    ..click();
+  html.Url.revokeObjectUrl(url);
 }

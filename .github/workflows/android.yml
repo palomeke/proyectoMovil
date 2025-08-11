@@ -34,7 +34,11 @@ jobs:
         run: |
           dart --version
           flutter analyze || true
-          flutter test
+          if [ -d test ]; then
+            flutter test
+          else
+            echo "No test/ directory; skipping tests."
+          fi
 
       - name: Build Web (release)
         run: flutter build web --release --base-href "/proyectoMovil/"
