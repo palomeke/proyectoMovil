@@ -25,7 +25,7 @@ Future<void> exportClothesToPDF(List<Clothes> clothes) async {
   final blob = html.Blob([bytes]);
   final url = html.Url.createObjectUrlFromBlob(blob);
   final anchor = html.AnchorElement(href: url)
-    ..setAttribute("download", "reporte_prendas_web.pdf")
+    ..setAttribute("download", "reporte_prendas.pdf")
     ..click();
   html.Url.revokeObjectUrl(url);
 }
