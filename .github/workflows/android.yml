@@ -51,8 +51,14 @@ jobs:
           flutter-version: '3.32.2'
           channel: 'stable'
 
-      - name: Accept Android licenses
-        run: yes | sdkmanager --licenses
+      # ✅ Instala Android SDK y deja sdkmanager disponible
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: |
+            platform-tools
+            platforms;android-35
+            build-tools;35.0.0
 
       # (Opcional) colocar google-services.json desde secretos
       - name: Put google-services.json per flavor
