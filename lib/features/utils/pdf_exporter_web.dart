@@ -12,7 +12,8 @@ Future<void> exportClothesToPDF(List<Clothes> clothes) async {
       build: (context) => pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-          pw.Text('Listado de Prendas', style: pw.TextStyle(fontSize: 24)),
+          pw.Text('Listado de Prendas de Vestir',
+              style: pw.TextStyle(fontSize: 24)),
           pw.SizedBox(height: 21),
           ...clothes.map((item) => pw.Text(
               '• ${item.name} - Tipo: ${item.type}, Talla: ${item.size}, Cantidad: ${item.quantity}')),
