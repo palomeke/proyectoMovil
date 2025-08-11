@@ -59,7 +59,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               padding: const EdgeInsets.all(24),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.5),
+                color: Colors.white.withOpacity(0.85),
                 borderRadius: BorderRadius.circular(12),
               ),
               constraints: const BoxConstraints(maxWidth: 400),
