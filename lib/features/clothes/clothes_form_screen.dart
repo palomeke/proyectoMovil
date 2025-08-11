@@ -92,7 +92,7 @@ class _ClothesFormScreenState extends ConsumerState<ClothesFormScreen> {
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Campo requerido';
-                  if (int.tryParse(value) == null) return 'Debe ser un número';
+                  if (int.tryParse(value) == null) return 'Debe ser un número ';
                   return null;
                 },
               ),
